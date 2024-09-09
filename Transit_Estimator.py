@@ -79,7 +79,7 @@ def vary_mass_one_way(m_struct, m_fuel, mars_dist, isp):
            
         Mtot = Mtot - dmdt*dt #update mass
         pos = pos + v*dt #update position
-        sun_to_craft = 1.5e11 + pos/3
+        sun_to_craft = 1.5e11 + pos
         t = t+dt #update time
     print("time to reach Mars:", t/24/3600, "days")
     print("velocity at mars", v, "m/s")
@@ -89,7 +89,7 @@ def vary_mass_one_way(m_struct, m_fuel, mars_dist, isp):
 
 #print("Propellent Needed:", mass_propellant(5.4, 2600, vary_mass_one_way(110e3, 126e3, 225e9, 5.4, 2600)), "kg")
 #print("Propellent Needed:", mass_propellant(100, 2600, vary_mass(110e3, 0, 225e9, 100, 2600)), "kg")
-print("Propellent Needed:", mass_propellant(100, 2600, vary_mass_one_way(110e3, 150e3, 225e9, 2600)), "kg")
+print("Propellent Needed:", mass_propellant(100, 2600, vary_mass_one_way(110e3, 150e3, 78e9, 2600)), "kg")
 #print("Fuel Cost:", fuel_cost(mass_propellant(5.4, 2600, vary_mass(110e3, 126e3, 225e9, 5.4, 2600)), 15000), "USD")
 #print("The solar irradiance at earth is", solar_irradiance(1.5e11), "W/m^2")
 
