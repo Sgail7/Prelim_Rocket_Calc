@@ -95,4 +95,3 @@ print("Propellent Needed:", mass_propellant(100, 2600, vary_mass_one_way(110e3, 
 
 #thrust = vary_thrust(solar_irradiance(1.5e11)*3500*0.4, 2600, 0.63)
 #print("Thrust:", thrust, "N")
-#test
