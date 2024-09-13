@@ -103,15 +103,7 @@ def graphing(x, y, title, x_label, y_label):
     plt.ylabel(y_label)
     plt.show()
 
-#print("Propellent Needed:", mass_propellant(5.4, 2600, vary_mass_one_way(110e3, 126e3, 225e9, 5.4, 2600)), "kg")
-#print("Propellent Needed:", mass_propellant(100, 2600, vary_mass(110e3, 0, 225e9, 100, 2600)), "kg")
-#print("Propellent Needed:", mass_propellant(100, 2600, vary_mass_one_way(110e3, 150e3, 78e9, 2600)), "kg")
-
-
-v_graph, t_graph, m_graph, thrust_graph, t, m_tot, v_end = vary_mass_one_way(110e3, 150e3, 78e9, 2600, 0)
-# graphing(t_graph, v_graph, "Velocity vs. Time", "Time (days)", "Velocity (m/s)")
-# graphing(t_graph, m_graph, "Mass vs. Time", "Time (days)", "Mass (kg)")
-# graphing(t_graph, thrust_graph, "Thrust vs. Time", "Time (days)", "Thrust (N)")
+v_graph, t_graph, m_graph, thrust_graph, t, m_tot, v_end = vary_mass_one_way(110e3, 150e3, 78e9, 2600, 14000)
 
 fig, (ax1, ax2, ax3) = plt.subplots(3)
 ax1.plot(t_graph, v_graph)
@@ -128,9 +120,5 @@ plt.show()
 print("Total Transit Time:", secs_to_days(t), "Days")
 print("Velocity @ Mars:", v_end, "m/s")
 print("Electric Propellent Mass Required:", 260000 - m_tot, "kg")
-
-#print("Fuel Cost:", fuel_cost(mass_propellant(5.4, 2600, vary_mass(110e3, 126e3, 225e9, 5.4, 2600)), 15000), "USD")
-#print("The solar irradiance at earth is", solar_irradiance(1.5e11), "W/m^2")
-
-#thrust = vary_thrust(solar_irradiance(1.5e11)*3500*0.4, 2600, 0.63)
-#print("Thrust:", thrust, "N")
+print("Xenon Propellent Cost:", fuel_cost(260000 - m_tot, 5000),"USD")
+print("Krypton Propellent Cost:", fuel_cost(260000 - m_tot, 2100),"USD")
