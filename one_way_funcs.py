@@ -97,7 +97,7 @@ def chem_burn(m_struct, m_ox, m_prop, m_elec_prop, isp, thrust, f_ox_r, t=0, pos
 
     return(t, pos, v, m_ox, m_prop, m_ox_i, m_prop_i, v_graph, t_graph, m_graph, ox_graph, prop_graph)
 
-def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_area, t=0, pos=0, v=0, dir=1, mars_dist = 78e9):
+def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_area, t=0, pos=0, v=0, dir=1, mars_dist = 6.41e11): #78e9
     # Define time step
     dt = 3600 #seconds
 
@@ -132,3 +132,39 @@ def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_are
         thrust_graph.append(thrust)
     
     return(v_graph, t_graph, m_graph, thrust_graph, v, t, pos, m_tot, m_elec_prop)
+
+def elec_turn(m_struct, m_fuel, marsDist, Thrust, I_sp, v_f):
+    pos = 0
+    v = 0 #m/s
+    t = 0
+    dt = 600 #seconds
+    dmdt = mass_flow_rate(Thrust, I_sp)
+
+    for dturn in range(1,100): #search over possible values for the d_turn as a percent of the total trip distance
+        pos = 0
+        v = 0 #m/s
+        t = 0
+        
+        Mtot = m_struct + m_fuel
+        while pos < marsDist:
+            #update velocity
+            if pos < dturn/100*marsDist:
+                v = v + (Thrust/Mtot)*dt #accelerate
+            else:
+                v = v - (Thrust/Mtot)*dt #deaccelerate
+            # if v > v_f:
+            #     print("fail--didn't slow down enough with turnaround at", dturn, "percent of journey") #stop if Hermes starts to turn around
+            #     print("Speed:", v)
+                
+            Mtot = Mtot - dmdt*dt #update mass
+            pos = pos + v*dt #update position
+            t = t+dt #update time
+            
+        if v <= v_f:
+            print("success--reached Mars with turnaround at", dturn, "percent of journey")
+            break
+
+    print("time to reach Mars:", t/24/3600, "days")
+    print("velocity at mars", v, "m/s")
+
+    return(t)

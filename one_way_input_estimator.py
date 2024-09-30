@@ -1,4 +1,5 @@
 from one_way_funcs import *
+import numpy as np
 
 m_struct = 110e3 + 178518.4635 # Second number is fuel for last burn
 m_elec_prop = 80.97e3 # Was 64.9e3
@@ -29,7 +30,7 @@ m_struct = 110e3
 isp = 2600
 eff = 0.63
 panel_eff = 0.3
-EP = 3e6
+EP = 2e6
 panel_area = EP_to_area(EP, panel_eff, 1.496e11)
 
 v_graph_1, t_graph_1, m_graph_1, thrust_graph_1, v_1, t_1, pos_1, m_tot_1, m_elec_prop_1 = elec_burn(m_struct, m_ox_i + m_prop_i, m_elec_prop, isp, eff, panel_eff, panel_area)
@@ -67,4 +68,12 @@ print("Mass Flow Rate:", mass_flow_rate(thrust, isp), "kg/s")
 graphing(t_graph_2, v_graph_2, "Delta V vs Time", 'Time (secs)', 'Velocity (m/s)')
 plt.show()
 graphing(t_graph_2, m_graph_2, "Mass vs Time", 'Time (secs)', 'Mass (kg)')
+plt.show()
+
+# Calculate acceleration from velocity graph
+acceleration = np.diff(v_graph_2) / np.diff(t_graph_2)
+t_acceleration = t_graph[:-1]  # Time points for acceleration are one less than for velocity
+
+# Plot the acceleration graph
+graphing(t_acceleration, acceleration, "Acceleration vs Time", 'Time (secs)', 'Acceleration (m/s^2)')
 plt.show()
