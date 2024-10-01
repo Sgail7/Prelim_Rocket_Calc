@@ -42,8 +42,8 @@ def chem_burn(m_struct, m_ox, m_prop, m_elec_prop, isp, thrust, f_ox_r, t=0, pos
     dt = 1 #seconds
 
     # Log Initial Oxidizer and Propellant Mass
-    m_ox_i = m_ox
-    m_prop_i = m_prop
+    # m_ox_i = m_ox
+    # m_prop_i = m_prop
 
     # Define direction of thrust
     if dir >= 0:
@@ -95,7 +95,7 @@ def chem_burn(m_struct, m_ox, m_prop, m_elec_prop, isp, thrust, f_ox_r, t=0, pos
             ox_graph.append(m_ox)
             prop_graph.append(m_prop)
 
-    return(t, pos, v, m_ox, m_prop, m_ox_i, m_prop_i, v_graph, t_graph, m_graph, ox_graph, prop_graph)
+    return(t, pos, v, m_ox, m_prop, v_graph, t_graph, m_graph, ox_graph, prop_graph)
 
 def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_area, t=0, pos=0, v=0, dir=1, mars_dist = 78e9):
     # Define time step
