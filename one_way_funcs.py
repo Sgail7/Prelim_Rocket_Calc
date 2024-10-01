@@ -69,8 +69,8 @@ def chem_burn(m_struct, m_ox, m_prop, m_elec_prop, isp, thrust, f_ox_r, t=0, pos
         v = v + (dir * thrust)/m_tot*dt # Dir is 1 or -1, defines either accel or decel
 
         m_tot = m_tot - m_dot*dt #update mass
-        m_ox = m_ox - m_dot*dt*(1 / (f_ox_r + 1))
-        m_prop = m_prop - m_dot*dt*(f_ox_r / (f_ox_r + 1))
+        m_ox = m_ox - m_dot*dt*(f_ox_r / (f_ox_r + 1))
+        m_prop = m_prop - m_dot*dt*(1 / (f_ox_r + 1))
         pos = pos + v*dt #update position
         t = t+dt #update time
         v_graph.append(v)
@@ -117,7 +117,7 @@ def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_are
     m_tot = m_struct + m_chem_prop + m_elec_prop
     sun_to_craft = 1.496e11 + pos
 
-    while pos < mars_dist:
+    while pos < mars_dist and pos >=0:
         thrust = vary_thrust(area_to_EP(panel_area, panel_eff, sun_to_craft), isp, eff)
         m_dot = mass_flow_rate(thrust, isp)
         v = v + (dir * thrust)/m_tot*dt # Dir is 1 or -1, defines either accel or decel
@@ -132,6 +132,8 @@ def elec_burn(m_struct, m_chem_prop, m_elec_prop, isp, eff, panel_eff, panel_are
         t_graph.append(t)
         m_graph.append(m_tot)
         thrust_graph.append(thrust)
+        if v < 0:
+            break
     
     return(v_graph, t_graph, m_graph, thrust_graph, v, t, pos, m_tot, m_elec_prop_actual)
 
