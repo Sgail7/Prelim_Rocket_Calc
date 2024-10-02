@@ -5,7 +5,7 @@ import numpy as np
 EP = 2e6
 panel_eff = 0.3
 panel_area = EP_to_area(EP, panel_eff, 1.496e11)
-mars_dist = 225e9
+mars_dist = 3e11
 leo_dist = 6378.137e3 + 400e3
 lmo_dist = 3396.2e3 + 200e3
 v_earth_orbit = v_circ_orbit(3.986e14, leo_dist)
