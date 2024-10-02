@@ -31,6 +31,10 @@ def area_to_EP(area, eff, sun_dis):
     EP = area * solar_irradiance(sun_dis) * eff
     return EP
 
+def v_circ_orbit(mu, r):
+    vel = sqrt(mu/r)
+    return vel
+
 def graphing(x, y, title, x_label, y_label):
     plt.plot(x, y)
     plt.title(title)
